@@ -11,8 +11,8 @@ export const getPopularRecipes = createAsyncThunk(
 
 export const getRecipes = createAsyncThunk(
   'recipes/getRecipes',
-  async () => {
-    const data = await fetchRecipes();
+  async (searchParams) => {
+    const data = await fetchRecipes(searchParams);
     return data;
   },
 );
@@ -41,7 +41,14 @@ const initialState = {
   isFavoriteRecipes: [],
   favoriteRecipes: [],
   recipe: {},
-  healthLabelRecipes: []
+  healthLabelRecipes: [],
+  searchParams: {
+    q: '',
+    calories: null,
+    diet: '',
+    health: '',
+    ingr: null
+  }
 };
 
 const recipesSlice = createSlice({
@@ -60,6 +67,10 @@ const recipesSlice = createSlice({
         state.favoriteRecipes = state.favoriteRecipes.filter(
           (recipe) => recipe.uri !== action.payload.uri)
         : state.favoriteRecipes.push(action.payload);
+    },
+    setSearchParams: (state, action) => {
+      console.log(action.payload.q)
+      state.searchParams.q = action.payload.q;
     }
   },
 
@@ -128,6 +139,6 @@ const recipesSlice = createSlice({
   },
 });
 
-export const { isFavorite, favoriteBooleanArr, addToFavoriteList } = recipesSlice.actions;
+export const { isFavorite, favoriteBooleanArr, addToFavoriteList, setSearchParams } = recipesSlice.actions;
 
 export default recipesSlice.reducer;

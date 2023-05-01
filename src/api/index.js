@@ -27,11 +27,15 @@ export const fetchPopularRecipes = async () => {
   };
 }
 
-export const fetchRecipes = async () => {
+export const fetchRecipes = async (searchParams) => {
   try {
     const { data } = await edamamAxios.get('/search', {
       params: {
-        q: 'breakfast',
+        q: searchParams.q || 'breakfast',
+        calories: searchParams.calories || null,
+        diet: searchParams.diet || null,
+        health: searchParams.health || null,
+        ingr: searchParams.ingr || null,
         from: 0,
         to: 20,
         ...apiAccess,
@@ -67,6 +71,8 @@ export const fetchRecipesHealthLabel = async (healthLabel) => {
       params: {
         type: 'public',
         health: `${formattedHealthLabel}`,
+        from: 20,
+        to: 40,
         ...apiAccess,
       },
     });
@@ -76,20 +82,3 @@ export const fetchRecipesHealthLabel = async (healthLabel) => {
     console.log(error);
   };
 };
-
-// export const fetchRecipes = async () => {
-//   try {
-//     const { data } = await edamamAxios.get('/search', {
-//       params: {
-//         q: 'breakfast',
-//         from: 0,
-//         to: 20,
-//         ...apiAccess,
-//       },
-//     });
-//     return data.hits;
-//   }
-//   catch (error) {
-//     console.log(error);
-//   };
-// }

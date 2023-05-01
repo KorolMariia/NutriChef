@@ -36,3 +36,11 @@ body {
     text-decoration: none;
     color: inherit;
 }
+
+#search-error {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    color: #43A047;
+    font-size: 12px;
+}

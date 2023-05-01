@@ -7,7 +7,7 @@ import CardRecipe from '../../Components/CardRecipe';
 import Loader from '../../Components/Loader';
 import EastIcon from '@mui/icons-material/East';
 
-const Recipes = memo(() => {
+const PopularRecipes = memo(() => {
   const dispatch = useDispatch();
   const loading = useSelector(({ recipes }) => recipes.loading);
   // const error = useSelector(({ recipes }) => recipes.error);
@@ -40,4 +40,4 @@ const Recipes = memo(() => {
 }
 );
 
-export default Recipes;
+export default PopularRecipes;

@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import Recipes from './Recipes';
+import PopularRecipes from './PopularRecipes';
 
 const HomePage = () => {
   return (
@@ -10,7 +10,7 @@ const HomePage = () => {
       <Typography variant="subtitle1">
         Whether you're new to NutriChef or have been around for a while, we're so glad you're here.
       </Typography>
-      <Recipes />
+      <PopularRecipes />
     </>
   );
 }
