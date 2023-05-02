@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APP_ID_SEARCH, APP_KEY_SEARCH, APP_ID_DATABASE, APP_KEY_DATABASE } from '../config';
+import { APP_ID_SEARCH, APP_KEY_SEARCH, APP_ID_DATABASE, APP_KEY_DATABASE, APP_KEY_ANALYSIS, APP_ID_ANALYSIS } from '../config';
 
 const apiAccessSearch = {
   app_id: APP_ID_SEARCH,
@@ -9,6 +9,11 @@ const apiAccessSearch = {
 const apiAccessDatabase = {
   app_id: APP_ID_DATABASE,
   app_key: APP_KEY_DATABASE,
+};
+
+const apiAccessAnalysis = {
+  app_id: APP_ID_ANALYSIS,
+  app_key: APP_KEY_ANALYSIS,
 };
 
 const edamamAxios = axios.create({
