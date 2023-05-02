@@ -51,7 +51,7 @@ const SearchRecipes = memo(() => {
     <>
       <Paper
         component='form'
-        sx={{ display: 'flex', alignItems: 'center', width: '100%', mb: '20px', position: 'relative' }}
+        sx={{ display: 'flex', alignItems: 'center', width: '100%', position: 'relative' }}
       >
         <InputBase
           sx={{ ml: 1, flex: 1 }}

@@ -1,9 +1,14 @@
 import axios from 'axios';
-import { APP_ID, APP_KEY } from '../config';
+import { APP_ID_SEARCH, APP_KEY_SEARCH, APP_ID_DATABASE, APP_KEY_DATABASE } from '../config';
 
-const apiAccess = {
-  app_id: APP_ID,
-  app_key: APP_KEY,
+const apiAccessSearch = {
+  app_id: APP_ID_SEARCH,
+  app_key: APP_KEY_SEARCH,
+};
+
+const apiAccessDatabase = {
+  app_id: APP_ID_DATABASE,
+  app_key: APP_KEY_DATABASE,
 };
 
 const edamamAxios = axios.create({
@@ -17,7 +22,7 @@ export const fetchPopularRecipes = async () => {
         q: 'salad',
         from: 0,
         to: 4,
-        ...apiAccess,
+        ...apiAccessSearch,
       },
     });
     return data.hits;
@@ -38,7 +43,7 @@ export const fetchRecipes = async (searchParams) => {
         ingr: searchParams.ingr || null,
         from: 0,
         to: 20,
-        ...apiAccess,
+        ...apiAccessSearch,
       },
     });
     return data.hits;
@@ -54,7 +59,7 @@ export const fetchRecipe = async (recipe_uri) => {
     const { data } = await edamamAxios.get(`/api/recipes/v2/${recipeId}`, {
       params: {
         type: 'public',
-        ...apiAccess,
+        ...apiAccessSearch,
       },
     });
     return data.recipe;
@@ -73,7 +78,7 @@ export const fetchRecipesHealthLabel = async (healthLabel) => {
         health: `${formattedHealthLabel}`,
         from: 20,
         to: 40,
-        ...apiAccess,
+        ...apiAccessSearch,
       },
     });
     return data.hits;
@@ -82,3 +87,22 @@ export const fetchRecipesHealthLabel = async (healthLabel) => {
     console.log(error);
   };
 };
+
+// export const fetchListDiet = async () => {
+//   try {
+//     const data = await edamamAxios.get(`/api/food-database/v2/references/allergens`, {
+//       params: {
+//         // category: 'diet',
+//         // categoryLabel: 'diet',
+//         // health: 'all',
+//         ...apiAccessDatabase,
+//       },
+//     });
+//     console.log(data)
+//     return data;
+//   }
+//   catch (error) {
+//     console.log(error);
+//   };
+// };
+// fetchListDiet()

@@ -38,8 +38,7 @@ const initialState = {
   recipes: [],
   loading: false,
   error: null,
-  isFavoriteRecipes: [],
-  favoriteRecipes: [],
+  favoriteRecipes: JSON.parse(localStorage.getItem('favoritesRecipes')) || [],
   recipe: {},
   healthLabelRecipes: [],
   searchParams: {
@@ -48,25 +47,21 @@ const initialState = {
     diet: '',
     health: '',
     ingr: null
-  }
+  },
 };
 
 const recipesSlice = createSlice({
   name: 'recipes',
   initialState,
   reducers: {
-    favoriteBooleanArr: (state) => {
-      state.isFavoriteRecipes = state.popularRecipes.map(() => false);
-    },
-    isFavorite: (state, action) => {
-      state.isFavoriteRecipes[action.payload] = !state.isFavoriteRecipes[action.payload];
-    },
     addToFavoriteList: (state, action) => {
+      state.favoriteRecipes = JSON.parse(localStorage.getItem('favoritesRecipes')) || [];
       const recipesUri = state.favoriteRecipes ? state.favoriteRecipes.map((recipe) => recipe.uri) : null;
       recipesUri.includes(action.payload.uri) ?
         state.favoriteRecipes = state.favoriteRecipes.filter(
           (recipe) => recipe.uri !== action.payload.uri)
         : state.favoriteRecipes.push(action.payload);
+      localStorage.setItem('favoritesRecipes', JSON.stringify(state.favoriteRecipes));
     },
     setSearchParams: (state, action) => {
       console.log(action.payload.q)

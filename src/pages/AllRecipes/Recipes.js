@@ -20,15 +20,15 @@ const Recipes = memo(() => {
     return <Loader />
   }
 
-  const recipeHealthCards = healthLabelRecipes.map(({ recipe }, index) => (
-    <CardRecipe recipe={recipe} key={index} />
+  const recipeHealthCards = healthLabelRecipes.map(({ recipe }) => (
+    <CardRecipe recipe={recipe} key={recipe.uri} />
   ));
 
   return (
     <>
       {recipeHealthCards}
       {recipes.length ?
-        recipes.map(({ recipe }, index) => <CardRecipe recipe={recipe} index={index} key={index} />)
+        recipes.map(({ recipe }) => <CardRecipe recipe={recipe} key={recipe.uri} />)
         : <Typography variant="subtitle1" >
           Recipes not found. Please try a different query.
         </Typography>}

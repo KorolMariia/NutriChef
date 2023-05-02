@@ -1,7 +1,7 @@
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { isFavorite, addToFavoriteList, getRecipe } from '../state/recipes/recipesSlice';
+import { addToFavoriteList, getRecipe } from '../state/recipes/recipesSlice';
 import { Grid, Card, CardHeader, CardMedia, CardActions } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -9,14 +9,24 @@ import ShareIcon from '@mui/icons-material/Share';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
-const CardRecipe = memo(({ recipe, index }) => {
+const CardRecipe = memo(({ recipe }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFavoriteRecipes = useSelector(({ recipes }) => recipes.isFavoriteRecipes);
+  const favoriteRecipes = useSelector(({ recipes }) => recipes.favoriteRecipes);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(favoriteRecipes.some((favRecipe) => favRecipe.uri === recipe.uri));
+  }, [favoriteRecipes, recipe.uri]);
 
   function navigateToRecipeInfo(recipeUri) {
     navigate(`/recipedetails`, { replace: true });
     dispatch(getRecipe(recipeUri))
+  }
+
+  const handleFavoriteClick = () => {
+    dispatch(addToFavoriteList(recipe));
+    setIsFavorite(!isFavorite);
   }
 
   return (
@@ -45,8 +55,8 @@ const CardRecipe = memo(({ recipe, index }) => {
           subheader={`${recipe.mealType}, ${recipe.cuisineType}`}
         />
         <CardActions disableSpacing style={{ display: "flex", justifyContent: "flex-end" }}>
-          <IconButton aria-label="add to favorites" onClick={() => { dispatch(isFavorite(index)); dispatch(addToFavoriteList(recipe)) }}>
-            {isFavoriteRecipes[index] ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteBorderIcon />}
+          <IconButton aria-label="add to favorites" onClick={handleFavoriteClick}>
+            {isFavorite ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteBorderIcon />}
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />

@@ -10,7 +10,7 @@ const FavoritePage = memo(() => {
   return (
     <Grid container spacing={2} justifyContent='center'>
       {favoriteRecipes.length > 0 ?
-        favoriteRecipes.map((recipe, index) => <CardRecipe recipe={recipe} key={index} index={index} />)
+        favoriteRecipes.map((recipe) => <CardRecipe recipe={recipe} key={recipe.uri} />)
         : <Typography variant="subtitle1" >
           You haven't added any recipes to your favorites yet.
         </Typography>
