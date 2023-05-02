@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Container, Link, Typography, useTheme } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
-const Footer = () => {
+const Footer = memo(() => {
   const theme = useTheme();
 
   return (
@@ -40,6 +41,6 @@ const Footer = () => {
       </Container>
     </Box>
   );
-}
+});
 
 export default Footer;

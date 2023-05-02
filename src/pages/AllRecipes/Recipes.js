@@ -9,7 +9,6 @@ const Recipes = memo(() => {
   const dispatch = useDispatch();
   const loading = useSelector(({ recipes }) => recipes.loading);
   const recipes = useSelector(({ recipes }) => recipes.recipes);
-  const healthLabelRecipes = useSelector(({ recipes }) => recipes.healthLabelRecipes);
   const searchParams = useSelector(({ recipes }) => recipes.searchParams);
 
   useEffect(() => {
@@ -20,13 +19,8 @@ const Recipes = memo(() => {
     return <Loader />
   }
 
-  const recipeHealthCards = healthLabelRecipes.map(({ recipe }) => (
-    <CardRecipe recipe={recipe} key={recipe.uri} />
-  ));
-
   return (
     <>
-      {recipeHealthCards}
       {recipes.length ?
         recipes.map(({ recipe }) => <CardRecipe recipe={recipe} key={recipe.uri} />)
         : <Typography variant="subtitle1" >

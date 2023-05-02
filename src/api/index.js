@@ -21,7 +21,7 @@ export const fetchPopularRecipes = async () => {
       params: {
         q: 'salad',
         from: 0,
-        to: 4,
+        to: 8,
         ...apiAccessSearch,
       },
     });

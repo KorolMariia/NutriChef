@@ -1,10 +1,10 @@
-import React from 'react';
+import { memo, useState } from 'react';
 import { Button, Box, Popover, useTheme } from '@mui/material';
 import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCircleOutlined';
 
-export default function FilterRecipes() {
+const FilterRecipes = memo(() => {
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -47,4 +47,6 @@ export default function FilterRecipes() {
       </Popover>
     </Box >
   );
-}
+});
+
+export default FilterRecipes;

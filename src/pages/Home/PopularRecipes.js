@@ -10,7 +10,6 @@ import EastIcon from '@mui/icons-material/East';
 const PopularRecipes = memo(() => {
   const dispatch = useDispatch();
   const loading = useSelector(({ recipes }) => recipes.loading);
-  // const error = useSelector(({ recipes }) => recipes.error);
   const popularRecipes = useSelector(({ recipes }) => recipes.popularRecipes);
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const PopularRecipes = memo(() => {
   if (loading) {
     return <Loader />
   };
-
 
   return (
     <>

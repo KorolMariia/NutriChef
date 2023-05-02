@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { Typography } from '@mui/material';
 import PopularRecipes from './PopularRecipes';
 
-const HomePage = () => {
+const HomePage = memo(() => {
   return (
     <>
       <Typography variant="h3" component="h3">
@@ -13,6 +14,6 @@ const HomePage = () => {
       <PopularRecipes />
     </>
   );
-}
+});
 
 export default HomePage;

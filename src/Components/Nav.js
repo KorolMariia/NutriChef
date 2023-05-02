@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Container, Avatar, Tooltip, Toolbar, MenuItem, AppBar, IconButton, Typography, Menu, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 const pages = ['Home', 'About', 'Recipes', 'Favorites'];
 const settings = ['Profile', 'Logout'];
 
-const Nav = () => {
+const Nav = memo(() => {
   const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -136,5 +136,6 @@ const Nav = () => {
       </Container>
     </AppBar>
   );
-}
+});
+
 export default Nav;

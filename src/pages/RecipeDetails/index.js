@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRecipesHealthLabel } from '../../state/recipes/recipesSlice';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -10,7 +11,7 @@ import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 import SoupKitchenOutlinedIcon from '@mui/icons-material/SoupKitchenOutlined';
 
-const RecipeDetailsPage = () => {
+const RecipeDetailsPage = memo(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const RecipeDetailsPage = () => {
       </NavLink>
     </>
   );
-};
+});
 
 
 export default RecipeDetailsPage;

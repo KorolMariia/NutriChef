@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { Typography, CardMedia, Grid, Box } from '@mui/material';
 import RamenDiningOutlinedIcon from '@mui/icons-material/RamenDiningOutlined';
 
-const AboutPage = () => {
+const AboutPage = memo(() => {
   return (
     <>
       <Typography variant="h3" component="h3">
@@ -41,6 +42,6 @@ const AboutPage = () => {
       </Grid>
     </>
   );
-}
+});
 
 export default AboutPage;

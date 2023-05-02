@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import SearchRecipes from './SearchRecipes';
 import FilterRecipes from './FilterRecipes';
 import Recipes from './Recipes';
 import { Grid, Typography } from '@mui/material';
 
-const AllRecipesPage = () => {
+const AllRecipesPage = memo(() => {
   return (
     <>
       <SearchRecipes />
@@ -18,6 +19,6 @@ const AllRecipesPage = () => {
 
     </>
   );
-}
+});
 
 export default AllRecipesPage;

@@ -34,13 +34,12 @@ export const getRecipesHealthLabel = createAsyncThunk(
 );
 
 const initialState = {
-  popularRecipes: [],
-  recipes: [],
   loading: false,
   error: null,
-  favoriteRecipes: JSON.parse(localStorage.getItem('favoritesRecipes')) || [],
+  popularRecipes: [],
+  recipes: [],
   recipe: {},
-  healthLabelRecipes: [],
+  favoriteRecipes: JSON.parse(localStorage.getItem('favoritesRecipes')) || [],
   searchParams: {
     q: '',
     calories: null,
@@ -118,22 +117,22 @@ const recipesSlice = createSlice({
       })
       .addCase(getRecipesHealthLabel.pending, (state) => {
         state.loading = true;
-        state.healthLabelRecipes = [];
+        state.recipes = [];
         state.error = null;
       })
       .addCase(getRecipesHealthLabel.fulfilled, (state, action) => {
         state.loading = false;
-        state.healthLabelRecipes = action.payload;
+        state.recipes = action.payload;
         state.error = null;
       })
       .addCase(getRecipesHealthLabel.rejected, (state, action) => {
         state.loading = false;
-        state.healthLabelRecipes = [];
+        state.recipes = [];
         state.error = action.payload;
       });
   },
 });
 
-export const { isFavorite, favoriteBooleanArr, addToFavoriteList, setSearchParams } = recipesSlice.actions;
+export const { addToFavoriteList, setSearchParams } = recipesSlice.actions;
 
 export default recipesSlice.reducer;
