@@ -13,7 +13,7 @@ const Loader = () => {
       }}
       direction="row"
     >
-      <CircularProgress sx={{ color: theme.palette.secondary.main }} />
+      <CircularProgress sx={{ color: theme.palette.primary.colored }} />
     </Stack>
   );
 };

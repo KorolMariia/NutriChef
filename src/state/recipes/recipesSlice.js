@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchPopularRecipes, fetchRecipes, fetchRecipe, fetchRecipesHealthLabel } from '../../api';
+import { fetchPopularRecipes, fetchRecipes, fetchRecipe, fetchRecipesHealthLabel, fetchRecipesSearchFilter } from '../../api';
 
 export const getPopularRecipes = createAsyncThunk(
   'recipes/getPopularRecipes',
@@ -11,8 +11,8 @@ export const getPopularRecipes = createAsyncThunk(
 
 export const getRecipes = createAsyncThunk(
   'recipes/getRecipes',
-  async (searchParams) => {
-    const data = await fetchRecipes(searchParams);
+  async () => {
+    const data = await fetchRecipes();
     return data;
   },
 );
@@ -33,6 +33,14 @@ export const getRecipesHealthLabel = createAsyncThunk(
   },
 );
 
+export const getRecipesSearchFilter = createAsyncThunk(
+  'recipes/getRecipesSearchFilter',
+  async (searchParams) => {
+    const data = await fetchRecipesSearchFilter(searchParams);
+    return data;
+  },
+);
+
 const initialState = {
   loading: false,
   error: null,
@@ -43,8 +51,9 @@ const initialState = {
   searchParams: {
     q: '',
     calories: null,
-    diet: '',
-    health: '',
+    health: null,
+    diet: null,
+    excluded: null,
     ingr: null
   },
 };
@@ -63,8 +72,10 @@ const recipesSlice = createSlice({
       localStorage.setItem('favoritesRecipes', JSON.stringify(state.favoriteRecipes));
     },
     setSearchParams: (state, action) => {
-      console.log(action.payload.q)
       state.searchParams.q = action.payload.q;
+      state.searchParams.health = action.payload.health;
+      state.searchParams.diet = action.payload.diet;
+      state.searchParams.excluded = action.payload.excluded;
     }
   },
 
@@ -126,6 +137,21 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(getRecipesHealthLabel.rejected, (state, action) => {
+        state.loading = false;
+        state.recipes = [];
+        state.error = action.payload;
+      })
+      .addCase(getRecipesSearchFilter.pending, (state) => {
+        state.loading = true;
+        state.recipes = [];
+        state.error = null;
+      })
+      .addCase(getRecipesSearchFilter.fulfilled, (state, action) => {
+        state.loading = false;
+        state.recipes = action.payload;
+        state.error = null;
+      })
+      .addCase(getRecipesSearchFilter.rejected, (state, action) => {
         state.loading = false;
         state.recipes = [];
         state.error = action.payload;

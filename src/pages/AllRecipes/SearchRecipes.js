@@ -10,7 +10,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const SearchRecipes = memo(() => {
   const dispatch = useDispatch();
-  // const searchParams = useSelector(({ recipes }) => recipes.searchParams);
   const [searchValue, setSearchValue] = useState('');
   const [errorSearchValue, setErrorSearchValue] = useState(null);
 

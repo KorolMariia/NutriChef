@@ -1,6 +1,6 @@
 import { useState, memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Container, Avatar, Tooltip, Toolbar, MenuItem, AppBar, IconButton, Typography, Menu, useTheme } from '@mui/material';
+import { Box, Avatar, Tooltip, Toolbar, MenuItem, AppBar, IconButton, Typography, Menu, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const pages = ['Home', 'About', 'Recipes', 'Favorites'];
@@ -27,17 +27,17 @@ const Nav = memo(() => {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: theme.palette.secondary.main }}>
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{ padding: ' 0 40px', bgcolor: theme.palette.primary.colored }}>
+      <Box >
         <Toolbar disableGutters>
-          <Typography
+          <Box
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
             }}
           >
-            <img src="images/logo.png" alt="Logo" width="100" height="100" />
-          </Typography>
+            <img src="images/logo.png" alt="Logo" width="120" height="120" />
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -81,15 +81,15 @@ const Nav = memo(() => {
               </Box>
             </Menu>
           </Box>
-          <Typography
+          <Box
             sx={{
               mr: 1,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
             }}
           >
-            <img src="images/logo.png" alt="Logo" width="150" height="150" />
-          </Typography>
+            <img src="images/logo.png" alt="Logo" width="100" height="100" />
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', gap: '40px', justifyContent: 'center' } }}>
             {pages.map((page) => (
               <NavLink
@@ -133,7 +133,7 @@ const Nav = memo(() => {
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 });

@@ -1,10 +1,11 @@
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import { Container } from '@mui/material';
 import theme from './theme';
 import RoutesList from './routes/RouterList';
 import Nav from './Components/Nav';
 import './App.css';
-import Footer from './Components/Footer';
+import Footer from './Components/Footer/Footer';
 
 
 const App = () => {
@@ -13,9 +14,9 @@ const App = () => {
       <BrowserRouter>
         <div className='wrapper'>
           <Nav />
-          <div className="container">
+          <Container>
             <RoutesList />
-          </div>
+          </Container>
           <Footer />
         </div>
       </BrowserRouter>

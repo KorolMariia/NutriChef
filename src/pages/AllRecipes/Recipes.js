@@ -1,6 +1,7 @@
 import { useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRecipes } from '../../state/recipes/recipesSlice';
+import _ from 'lodash';
+import { getRecipes, getRecipesSearchFilter } from '../../state/recipes/recipesSlice';
 import CardRecipe from '../../Components/CardRecipe';
 import Loader from '../../Components/Loader';
 import { Typography } from '@mui/material';
@@ -12,7 +13,11 @@ const Recipes = memo(() => {
   const searchParams = useSelector(({ recipes }) => recipes.searchParams);
 
   useEffect(() => {
-    dispatch(getRecipes(searchParams));
+    if (_.some(searchParams)) {
+      dispatch(getRecipesSearchFilter(searchParams));
+    } else {
+      dispatch(getRecipes());
+    }
   }, [dispatch, searchParams])
 
   if (loading) {
@@ -21,7 +26,7 @@ const Recipes = memo(() => {
 
   return (
     <>
-      {recipes.length ?
+      {recipes ?
         recipes.map(({ recipe }) => <CardRecipe recipe={recipe} key={recipe.uri} />)
         : <Typography variant="subtitle1" >
           Recipes not found. Please try a different query.

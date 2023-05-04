@@ -37,15 +37,11 @@ export const fetchPopularRecipes = async () => {
   };
 }
 
-export const fetchRecipes = async (searchParams) => {
+export const fetchRecipes = async () => {
   try {
     const { data } = await edamamAxios.get('/search', {
       params: {
-        q: searchParams.q || 'breakfast',
-        calories: searchParams.calories || null,
-        diet: searchParams.diet || null,
-        health: searchParams.health || null,
-        ingr: searchParams.ingr || null,
+        q: 'breakfast',
         from: 0,
         to: 20,
         ...apiAccessSearch,
@@ -93,21 +89,27 @@ export const fetchRecipesHealthLabel = async (healthLabel) => {
   };
 };
 
-// export const fetchListDiet = async () => {
-//   try {
-//     const data = await edamamAxios.get(`/api/food-database/v2/references/allergens`, {
-//       params: {
-//         // category: 'diet',
-//         // categoryLabel: 'diet',
-//         // health: 'all',
-//         ...apiAccessDatabase,
-//       },
-//     });
-//     console.log(data)
-//     return data;
-//   }
-//   catch (error) {
-//     console.log(error);
-//   };
-// };
-// fetchListDiet()
+
+export const fetchRecipesSearchFilter = async (searchParams) => {
+  console.log(searchParams)
+  try {
+    const { data } = await edamamAxios.get('/api/recipes/v2', {
+      params: {
+        type: 'public',
+        q: searchParams.q || '',
+        calories: searchParams.calories || null,
+        health: searchParams.health || null,
+        diet: searchParams.diet || null,
+        excluded: searchParams.excluded || null,
+        ingr: searchParams.ingr || null,
+        from: 0,
+        to: 20,
+        ...apiAccessSearch,
+      },
+    });
+    return data.hits;
+  }
+  catch (error) {
+    console.log(error);
+  };
+}

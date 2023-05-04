@@ -3,16 +3,23 @@ import { createTheme } from '@mui/material/styles';
 const commonStyles = {
   fontFamily: 'Sigmar, cursive',
   textAlign: 'center',
-}
+};
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
   palette: {
     primary: {
       main: '#fff',
+      colored: '#43A047',
       text: '#000',
-    },
-    secondary: {
-      main: '#43A047',
     },
   },
   typography: {
@@ -35,6 +42,14 @@ const theme = createTheme({
           marginBottom: '40px',
           padding: '15px'
         },
+        subtitle2: {
+          fontSize: '1rem',
+          fontWight: 'bold',
+          color: '#43A047',
+        },
+        body1: {
+          fontSize: '0.9rem'
+        }
       },
     },
     MuiSvgIcon: {
@@ -50,17 +65,42 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textDecoration: 'none',
-          paddingLeft: '1rem',
+          cursor: 'pointer',
+          fontWeight: 'bold',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textDecoration: 'none',
           cursor: 'pointer',
           transition: 'all 0.3s ease',
           fontWeight: 'bold',
-          '&:hover': {
-            color: '#000',
-          },
         },
       },
     },
   },
 });
+
+const containerStyles = ({
+  padding: '30px 30px',
+  [theme.breakpoints.up('sm')]: {
+    padding: '30px 30px',
+  },
+  [theme.breakpoints.up('md')]: {
+    padding: '30px 60px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    padding: '30px 120px',
+  },
+});
+
+
+theme.components.MuiContainer = {
+  styleOverrides: {
+    root: containerStyles,
+  },
+};
 
 export default theme;
