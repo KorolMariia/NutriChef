@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import { Typography, CardMedia, Grid, Box } from '@mui/material';
 import RamenDiningOutlinedIcon from '@mui/icons-material/RamenDiningOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+
 
 const AboutPage = memo(() => {
   return (
@@ -9,7 +11,7 @@ const AboutPage = memo(() => {
         Welcome, everyone!
       </Typography>
       <Typography variant="subtitle1">
-        Whether you're new to NutriChef or have been around for a while, we're so glad you're here.
+        Whether you're new to NutriChef or have been around for a while, we're so glad you're here <FavoriteOutlinedIcon />
       </Typography>
       <Grid container spacing={2} sx={{ alignItems: 'center' }}>
         <Grid item xs={12} md={6}>

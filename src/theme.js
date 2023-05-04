@@ -84,15 +84,15 @@ const theme = createTheme({
 });
 
 const containerStyles = ({
-  padding: '30px 30px',
+  padding: '20px 30px',
   [theme.breakpoints.up('sm')]: {
-    padding: '30px 30px',
+    padding: '20px 30px',
   },
   [theme.breakpoints.up('md')]: {
-    padding: '30px 60px',
+    padding: '20px 60px',
   },
   [theme.breakpoints.up('lg')]: {
-    padding: '30px 120px',
+    padding: '20px 120px',
   },
 });
 
