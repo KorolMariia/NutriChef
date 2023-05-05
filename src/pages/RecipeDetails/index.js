@@ -37,7 +37,7 @@ const RecipeDetailsPage = memo(() => {
           {recipe.label} / {recipe.cuisineType} food
         </Typography>
         {recipe.healthLabels.map((healthLabel, index) =>
-          <Link key={index} sx={{ color: theme.palette.secondary.main, paddingLeft: '1rem' }} onClick={() => navigateToRecipes(healthLabel)}>
+          <Link key={index} sx={{ color: theme.palette.primary.colored, paddingLeft: '1rem' }} onClick={() => navigateToRecipes(healthLabel)}>
             {healthLabel}
           </Link>)}
       </Box>

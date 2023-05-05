@@ -1,18 +1,22 @@
-import { memo, useState } from 'react';
+import { memo, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchParams } from '../../state/recipes/recipesSlice';
 import { Button, Box, Popover, useTheme, FormGroup, Typography, FormControl, FormControlLabel, Checkbox } from '@mui/material';
 import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCircleOutlined';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const allergies = ['Gluten', 'Dairy', 'Eggs', 'Soy', 'Wheat', 'Fish', 'Shellfish', 'Tree Nuts'];
 const health = ['Vegetarian', 'Vegan', 'Kosher', 'Paleo', 'Low-Sugar', 'Alcohol-Free', 'Immunity'];
 const diet = ['Balanced', 'High-Fiber', 'High-Protein', 'Low-Carb', 'Low-Fat', 'Low-Sodium'];
 
-
 const FilterRecipes = memo(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const timeoutRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const searchParamsQ = useSelector(({ recipes }) => recipes.searchParams.q);
+
   const [healthSearch, setHealthSearch] = useState([]);
   const [dietSearch, setDietSearch] = useState([]);
   const [allergenSearch, setAllergenSearch] = useState([]);
@@ -22,39 +26,55 @@ const FilterRecipes = memo(() => {
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    clearTimeout(timeoutRef.current);
   };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null);
+    timeoutRef.current = setTimeout(() => {
+      setAnchorEl(null);
+    }, 200);
   };
 
-  const handleHealthChange = (health) => {
-    setHealthSearch(prevState => [...prevState, health.toLowerCase()]);
-    // setHealthSearch(health.toLowerCase());
-  }
+  const handlePopoverMouseEnter = () => {
+    clearTimeout(timeoutRef.current);
+  };
 
-  const handleAllergenChange = (allergen) => {
-    setAllergenSearch(prevState => [...prevState, allergen.toLowerCase()]);
-    // setAllergenSearch(allergen.toLowerCase());
-  }
+  const handleHealthChange = (health, checked) => {
+    if (checked) {
+      setHealthSearch(prevState => [...prevState, health.toLowerCase()]);
+    } else {
+      setHealthSearch(prevState => prevState.filter(item => item !== health.toLowerCase()));
+    }
+  };
 
-  const handleDietChange = (diet) => {
-    setDietSearch(diet.toLowerCase());
-  }
+  const handleAllergenChange = (allergen, checked) => {
+    if (checked) {
+      setAllergenSearch(prevState => [...prevState, allergen.toLowerCase()]);
+    } else {
+      setAllergenSearch(prevState => prevState.filter(item => item !== allergen.toLowerCase()));
+    }
+  };
 
-  const open = Boolean(anchorEl);
+  const handleDietChange = (diet, checked) => {
+    if (checked) {
+      setDietSearch(prevState => [...prevState, diet.toLowerCase()]);
+    } else {
+      setDietSearch(prevState => prevState.filter(item => item !== diet.toLowerCase()));
+    }
+  };
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Button
         onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
         endIcon={<ArrowDropDownCircleOutlinedIcon />}
-        sx={{ color: theme.palette.secondary.main, textTransform: 'none' }}
+        sx={{ color: theme.palette.primary.colored, textTransform: 'none' }}
       >
         SEARCH by Calories, Diet, Ingredients
       </Button>
       <Popover
-        // onMouseEnter={handlePopoverOpen}
+        onMouseEnter={handlePopoverMouseEnter}
         onMouseLeave={handlePopoverClose}
         disableRestoreFocus
         style={{ pointerEvents: 'none' }}
@@ -79,8 +99,8 @@ const FilterRecipes = memo(() => {
                   key={health}
                   control={
                     <Checkbox
-                      checked={health.checked}
-                      onChange={() => handleHealthChange(health)}
+                      checked={healthSearch.includes(health.toLowerCase())}
+                      onChange={(event) => handleHealthChange(health, event.target.checked)}
                     />
                   }
                   label={health}
@@ -96,8 +116,8 @@ const FilterRecipes = memo(() => {
                   key={diet}
                   control={
                     <Checkbox
-                      checked={diet.checked}
-                      onChange={() => handleDietChange(diet)}
+                      checked={dietSearch.includes(diet.toLowerCase())}
+                      onChange={(event) => handleDietChange(diet, event.target.checked)}
                     />
                   }
                   label={diet}
@@ -113,8 +133,8 @@ const FilterRecipes = memo(() => {
                   key={allergen}
                   control={
                     <Checkbox
-                      checked={allergen.checked}
-                      onChange={() => handleAllergenChange(allergen)}
+                      checked={allergenSearch.includes(allergen.toLowerCase())}
+                      onChange={(event) => handleAllergenChange(allergen, event.target.checked)}
                     />
                   }
                   label={allergen}
@@ -123,15 +143,29 @@ const FilterRecipes = memo(() => {
             </FormGroup>
           </FormControl>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button
-            sx={{ backgroundColor: theme.palette.secondary.main }}
-            onClick={() => dispatch(setSearchParams({ health: healthSearchString, diet: dietSearch, excluded: allergenSearchString }))}
+            sx={{ color: theme.palette.primary.text, textTransform: 'none' }}
+            onClick={() => {
+              setHealthSearch([]);
+              setDietSearch([]);
+              setAllergenSearch([]);
+              dispatch(setSearchParams({ q: searchParamsQ, health: null, diet: null, excluded: null }));
+            }}
+          >
+            <CancelIcon />Clear filter
+          </Button>
+          <Button
+            sx={{ backgroundColor: theme.palette.primary.colored }}
+            onClick={() => {
+              dispatch(setSearchParams({ q: searchParamsQ, health: healthSearchString, diet: dietSearch, excluded: allergenSearchString }));
+              handlePopoverClose();
+            }}
           >
             Find
           </Button>
         </Box>
-      </Popover>
+      </Popover >
     </Box >
   );
 });

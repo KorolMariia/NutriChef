@@ -55,13 +55,13 @@ body {
 
 #search-error {
     position: absolute;
-    top: -20px;
+    top: -15px;
     right: 0;
     color: #43A047;
     font-size: 12px;
 }
 
-.css-dlm2wm-MuiButtonBase-root-MuiButton-root:hover {
-    background-color: none !important;
+.css-w7qqs-MuiButtonBase-root-MuiButton-root:hover {
+    background-color: #43A047 !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
 }

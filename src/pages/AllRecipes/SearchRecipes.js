@@ -38,6 +38,7 @@ const SearchRecipes = memo(() => {
     if (event.key === 'Escape') {
       setErrorSearchValue(null);
       setSearchValue('');
+      dispatch(setSearchParams({ q: '' }));
     }
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -55,7 +56,6 @@ const SearchRecipes = memo(() => {
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder='Search...'
-          autoFocus={true}
           inputProps={{ 'aria-label': 'search...' }}
           value={searchValue}
           onChange={onChangeHandler}

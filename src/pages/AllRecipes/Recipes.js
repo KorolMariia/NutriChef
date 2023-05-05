@@ -26,7 +26,7 @@ const Recipes = memo(() => {
 
   return (
     <>
-      {recipes ?
+      {recipes.length ?
         recipes.map(({ recipe }) => <CardRecipe recipe={recipe} key={recipe.uri} />)
         : <Typography variant="subtitle1" >
           Recipes not found. Please try a different query.
