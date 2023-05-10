@@ -1,10 +1,5 @@
 import axios from 'axios';
 import { APP_ID_SEARCH, APP_KEY_SEARCH, APP_ID_DATABASE, APP_KEY_DATABASE, APP_KEY_ANALYSIS, APP_ID_ANALYSIS } from '../config';
-import querystring from 'querystring';
-
-// const paramsSerializer = (params) => {
-//   return querystring.stringify(params, '&', '=', { encodeURIComponent: (str) => str });
-// };
 
 const apiAccessSearch = {
   app_id: APP_ID_SEARCH,
