@@ -1,14 +1,15 @@
 import { memo, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchParams } from '../../state/recipes/recipesSlice';
-import { Button, Box, Popover, useTheme, FormGroup, Typography, FormControl, FormControlLabel, Checkbox } from '@mui/material';
+import { Button, Box, Popover, useTheme, FormGroup, Typography, FormControl, FormControlLabel, Checkbox, InputBase, TextField } from '@mui/material';
 import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCircleOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const allergies = ['Gluten', 'Dairy', 'Eggs', 'Soy', 'Wheat', 'Fish', 'Shellfish', 'Tree Nuts'];
-const health = ['Vegetarian', 'Vegan', 'Kosher', 'Paleo', 'Low-Sugar', 'Alcohol-Free', 'Immunity'];
+const excluded = ['Gluten', 'Dairy', 'Eggs', 'Soy', 'Wheat', 'Fish', 'Shellfish', 'Tree Nuts'];
+const health = ['Vegetarian', 'Vegan', 'Kosher', 'Paleo', 'Low-Sugar', 'Alcohol-Free'];
 const diet = ['Balanced', 'High-Fiber', 'High-Protein', 'Low-Carb', 'Low-Fat', 'Low-Sodium'];
 
+//, 'Immunity'
 const FilterRecipes = memo(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -19,10 +20,11 @@ const FilterRecipes = memo(() => {
 
   const [healthSearch, setHealthSearch] = useState([]);
   const [dietSearch, setDietSearch] = useState([]);
-  const [allergenSearch, setAllergenSearch] = useState([]);
+  const [excludedSearch, setAllergenSearch] = useState([]);
 
   const healthSearchString = healthSearch.join('&health=');
-  const allergenSearchString = allergenSearch.join(',');
+  const dietSearchString = dietSearch.join('&diet=');
+  const excludedSearchString = excludedSearch.join('&excluded=');
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -128,16 +130,16 @@ const FilterRecipes = memo(() => {
           <FormControl component="fieldset">
             <Typography variant="subtitle2">Allergen</Typography>
             <FormGroup>
-              {allergies.map((allergen) => (
+              {excluded.map((exclud) => (
                 <FormControlLabel
-                  key={allergen}
+                  key={exclud}
                   control={
                     <Checkbox
-                      checked={allergenSearch.includes(allergen.toLowerCase())}
-                      onChange={(event) => handleAllergenChange(allergen, event.target.checked)}
+                      checked={excludedSearch.includes(exclud.toLowerCase())}
+                      onChange={(event) => handleAllergenChange(exclud, event.target.checked)}
                     />
                   }
-                  label={allergen}
+                  label={exclud}
                 />
               ))}
             </FormGroup>
@@ -158,7 +160,7 @@ const FilterRecipes = memo(() => {
           <Button
             sx={{ backgroundColor: theme.palette.primary.colored }}
             onClick={() => {
-              dispatch(setSearchParams({ q: searchParamsQ, health: healthSearchString, diet: dietSearch, excluded: allergenSearchString }));
+              dispatch(setSearchParams({ q: searchParamsQ, health: healthSearchString, diet: dietSearchString, excluded: excludedSearchString }));
               handlePopoverClose();
             }}
           >

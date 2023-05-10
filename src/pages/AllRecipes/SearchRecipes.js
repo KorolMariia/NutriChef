@@ -1,5 +1,5 @@
 import { useState, memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
 import { setSearchParams } from '../../state/recipes/recipesSlice';
 import Paper from '@mui/material/Paper';
@@ -12,12 +12,15 @@ const SearchRecipes = memo(() => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
   const [errorSearchValue, setErrorSearchValue] = useState(null);
+  const searchParamsHealth = useSelector(({ recipes }) => recipes.searchParams.health);
+  const searchParamsDiet = useSelector(({ recipes }) => recipes.searchParams.diet);
+  const searchParamsExcluded = useSelector(({ recipes }) => recipes.searchParams.excluded);
 
   const delayedSearch = useCallback(
     debounce((searchValue) => {
-      dispatch(setSearchParams({ q: searchValue }));
+      dispatch(setSearchParams({ q: searchValue, health: searchParamsHealth, diet: searchParamsDiet, excluded: searchParamsExcluded }));
     }, 600),
-    [dispatch],
+    [dispatch, searchParamsHealth, searchParamsDiet, searchParamsExcluded],
   );
 
   const onChangeHandler = (event) => {
@@ -38,7 +41,7 @@ const SearchRecipes = memo(() => {
     if (event.key === 'Escape') {
       setErrorSearchValue(null);
       setSearchValue('');
-      dispatch(setSearchParams({ q: '' }));
+      dispatch(setSearchParams({ q: '', health: searchParamsHealth, diet: searchParamsDiet, excluded: searchParamsExcluded }));
     }
     if (event.key === 'Enter') {
       event.preventDefault();

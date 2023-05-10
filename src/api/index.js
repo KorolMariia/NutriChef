@@ -1,5 +1,10 @@
 import axios from 'axios';
 import { APP_ID_SEARCH, APP_KEY_SEARCH, APP_ID_DATABASE, APP_KEY_DATABASE, APP_KEY_ANALYSIS, APP_ID_ANALYSIS } from '../config';
+import querystring from 'querystring';
+
+// const paramsSerializer = (params) => {
+//   return querystring.stringify(params, '&', '=', { encodeURIComponent: (str) => str });
+// };
 
 const apiAccessSearch = {
   app_id: APP_ID_SEARCH,
@@ -89,24 +94,36 @@ export const fetchRecipesHealthLabel = async (healthLabel) => {
   };
 };
 
+// export const fetchRecipesSearchFilter = async (searchParams) => {
+//   // console.log(searchParams)
+//   try {
+//     const { data } = await edamamAxios.get('/api/recipes/v2', {
+//       params: {
+//         type: 'public',
+//         q: searchParams.q || '',
+//         calories: searchParams.calories || null,
+//         health: searchParams.health || null,
+//         diet: searchParams.diet || null,
+//         excluded: searchParams.excluded || null,
+//         ingr: searchParams.ingr || null,
+//         from: 0,
+//         to: 20,
+//         ...apiAccessSearch,
+//       },
+//     });
+//     return data.hits;
+//   }
+//   catch (error) {
+//     console.log(error);
+//   };
+// }
 
 export const fetchRecipesSearchFilter = async (searchParams) => {
-  console.log(searchParams)
+
   try {
-    const { data } = await edamamAxios.get('/api/recipes/v2', {
-      params: {
-        type: 'public',
-        q: searchParams.q || '',
-        calories: searchParams.calories || null,
-        health: searchParams.health || null,
-        diet: searchParams.diet || null,
-        excluded: searchParams.excluded || null,
-        ingr: searchParams.ingr || null,
-        from: 0,
-        to: 20,
-        ...apiAccessSearch,
-      },
-    });
+    const { data } = await edamamAxios.get(
+      `/api/recipes/v2?type=public&${searchParams.q ? `q=${searchParams.q}` : ''}&${searchParams.health ? `health=${searchParams.health}` : ''}&${searchParams.diet ? `diet=${searchParams.diet}` : ''}&${searchParams.excluded ? `excluded=${searchParams.excluded}` : ''}&${searchParams.calories ? `calories=${searchParams.calories}` : ''}&${searchParams.ingr ? `ingr=${searchParams.ingr}` : ''}&app_id=${apiAccessSearch.app_id}&app_key=${apiAccessSearch.app_key}`,
+    );
     return data.hits;
   }
   catch (error) {

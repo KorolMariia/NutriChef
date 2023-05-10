@@ -72,6 +72,7 @@ const recipesSlice = createSlice({
       localStorage.setItem('favoritesRecipes', JSON.stringify(state.favoriteRecipes));
     },
     setSearchParams: (state, action) => {
+      console.log(action.payload)
       state.searchParams.q = action.payload.q;
       state.searchParams.health = action.payload.health;
       state.searchParams.diet = action.payload.diet;
