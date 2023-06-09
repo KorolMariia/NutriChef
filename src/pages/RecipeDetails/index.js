@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRecipesHealthLabel } from '../../state/recipes/recipesSlice';
+import { setSearchParams } from '../../state/recipes/recipesSlice';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Loader from '../../Components/Loader';
 import { Box, Grid, Typography, List, ListItem, ListItemText, Link, useTheme } from '@mui/material';
@@ -13,8 +13,8 @@ import SoupKitchenOutlinedIcon from '@mui/icons-material/SoupKitchenOutlined';
 
 const RecipeDetailsPage = memo(() => {
   const dispatch = useDispatch();
-  const theme = useTheme();
   const navigate = useNavigate();
+  const theme = useTheme();
   const loading = useSelector(({ recipes }) => recipes.loading);
   const recipe = useSelector(({ recipes }) => recipes.recipe);
 
@@ -22,9 +22,9 @@ const RecipeDetailsPage = memo(() => {
     return <Loader />
   }
 
-  function navigateToRecipes(healthLabel) {
+  const navigateToRecipes = (healthLabel) => {
     navigate(`/recipes`, { replace: true });
-    dispatch(getRecipesHealthLabel(healthLabel.toLowerCase()))
+    dispatch(setSearchParams({ health: healthLabel.toLowerCase() }))
   }
 
   return (
