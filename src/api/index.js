@@ -70,25 +70,6 @@ export const fetchRecipe = async (recipe_uri) => {
   };
 };
 
-export const fetchRecipesHealthLabel = async (healthLabel) => {
-  try {
-    const formattedHealthLabel = healthLabel.split(' ').join('-');
-    const { data } = await edamamAxios.get('/api/recipes/v2/', {
-      params: {
-        type: 'public',
-        health: `${formattedHealthLabel}`,
-        from: 20,
-        to: 40,
-        ...apiAccessSearch,
-      },
-    });
-    return data.hits;
-  }
-  catch (error) {
-    console.log(error);
-  };
-};
-
 // export const fetchRecipesSearchFilter = async (searchParams) => {
 //   // console.log(searchParams)
 //   try {

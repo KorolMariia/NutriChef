@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchPopularRecipes, fetchRecipes, fetchRecipe, fetchRecipesHealthLabel, fetchRecipesSearchFilter } from '../../api';
+import { fetchPopularRecipes, fetchRecipes, fetchRecipe, fetchRecipesSearchFilter } from '../../api';
 
 export const getPopularRecipes = createAsyncThunk(
   'recipes/getPopularRecipes',
@@ -21,14 +21,6 @@ export const getRecipe = createAsyncThunk(
   'recipes/getRecipe',
   async (recipeUri) => {
     const data = await fetchRecipe(recipeUri);
-    return data;
-  },
-);
-
-export const getRecipesHealthLabel = createAsyncThunk(
-  'recipes/getRecipesHealthLabel',
-  async (healthLabel) => {
-    const data = await fetchRecipesHealthLabel(healthLabel);
     return data;
   },
 );
@@ -72,7 +64,6 @@ const recipesSlice = createSlice({
       localStorage.setItem('favoritesRecipes', JSON.stringify(state.favoriteRecipes));
     },
     setSearchParams: (state, action) => {
-      console.log(action.payload)
       state.searchParams.q = action.payload.q;
       state.searchParams.health = action.payload.health;
       state.searchParams.diet = action.payload.diet;
@@ -125,21 +116,6 @@ const recipesSlice = createSlice({
       .addCase(getRecipe.rejected, (state, action) => {
         state.loading = false;
         state.recipe = {};
-        state.error = action.payload;
-      })
-      .addCase(getRecipesHealthLabel.pending, (state) => {
-        state.loading = true;
-        state.recipes = [];
-        state.error = null;
-      })
-      .addCase(getRecipesHealthLabel.fulfilled, (state, action) => {
-        state.loading = false;
-        state.recipes = action.payload;
-        state.error = null;
-      })
-      .addCase(getRecipesHealthLabel.rejected, (state, action) => {
-        state.loading = false;
-        state.recipes = [];
         state.error = action.payload;
       })
       .addCase(getRecipesSearchFilter.pending, (state) => {
